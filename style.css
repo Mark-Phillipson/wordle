@@ -22,6 +22,8 @@ body {
 .tile-container {
  width: 330px;
  margin-bottom: 30px;
+ font-size: xx-large;
+
 }
 .key-container {
  width: 510px;
