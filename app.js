@@ -1,7 +1,7 @@
 const tileDisplay = document.querySelector('.tile-container');
 const keyboard = document.querySelector('.key-container');
 const messageDisplay = document.querySelector('.message-container')
-
+const definitionDisplay = document.querySelector('.definition-container');
 let wordle;
 const getWordle = () => {
 	fetch('http://localhost:8000/word')
@@ -10,7 +10,7 @@ const getWordle = () => {
 			console.log(json);
 			wordle = json.toUpperCase();
 		})
-	.catch(err => console.log(err));
+		.catch(err => console.log(err));
 }
 getWordle();
 const keys = ['Q', 'W', , 'E', , 'R', , 'T', , 'Y', , 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'ENTER', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '🔙'];
@@ -108,34 +108,39 @@ const checkRow = () => {
 		fetch(`http://localhost:8000/check/?word=${guess}`)
 			.then(response => response.json())
 			.then(json => {
-			if (json==false) {
-				showMessage('Not a Valid Word!');
-				return;
-			}
-			else
-			{
-				console.log('guess is ' + guess, 'wordle is ' + wordle);
-				flipTile();
-				if (wordle == guess) {
-					showMessage('Magnificent!');
-					isGameOver = true;
+				if (json == false) {
+					showMessage('Not a Valid Word!');
 					return;
-				} else {
-					if (currentRow >= 5) {
+				}
+				else {
+					console.log('guess is ' + guess, 'wordle is ' + wordle);
+					flipTile();
+					console.log(json);
+					var firstDefinition = 'Definition: ' + json.results[0].definition;
+					showDefinition(firstDefinition);
+					if (wordle == guess) {
+						showMessage('Magnificent!');
+						showDefinition(firstDefinition);
 						isGameOver = true;
-						showMessage('Game over');
 						return;
+					} else {
+						if (currentRow >= 5) {
+							isGameOver = true;
+							showMessage('Game over Word was: ' + wordle);
+							showDefinition(firstDefinition);
+							return;
+						}
+					}
+					if (currentRow < 5) {
+						currentRow++;
+						currentTile = 0;
 					}
 				}
-				if (currentRow < 5) {
-					currentRow++;
-					currentTile = 0;
-				}
-			}
-		});
+			});
 	}
 };
 const showMessage = (message) => {
+	definitionDisplay.textContent = '';
 	const messageElement = document.createElement('p');
 	messageElement.textContent = message;
 	messageDisplay.append(messageElement);
@@ -143,6 +148,13 @@ const showMessage = (message) => {
 		messageDisplay.removeChild(messageElement);
 	}, 2000);;
 }
+const showDefinition = (definition) => {
+	definitionDisplay.textContent = definition;
+	setTimeout(() => {
+		definitionDisplay.textContent = '';
+	}, 10000);;
+}
+
 const addColorToKey = (keyLetter, color) => {
 	const key = document.getElementById(keyLetter);
 	key.classList.add(color);

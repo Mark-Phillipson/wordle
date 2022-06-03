@@ -23,7 +23,8 @@ app.get("/word", (req, res) => {
 	};
 
 	axios.request(options).then((response) => {
-		console.log(response.data.word);
+		//console.log(response.data.word);
+		console.log("first definition: ", response.data.results[0].definition);
 		res.json(response.data.word)
 	}).catch((error) => {
 		console.error(error);
@@ -45,7 +46,8 @@ app.get("/check", (req, res) => {
 
 	axios.request(options).then((response) => {
 		if (response.data.word.toUpperCase()==word.toUpperCase()) {
-			res.json(true);
+			console.log("first definition: ", response.data.results[0].definition);
+			res.json(response.data);
 		}
 		else 
 		{
