@@ -77,7 +77,7 @@ font-size: small;
 .gray-overlay {
  background-color: #3a3a3c !important;
  border: none !important;
- color: grey;
+ color: grey !important;
 }
 .yellow-overlay {
  background-color: #b59f3a !important;
