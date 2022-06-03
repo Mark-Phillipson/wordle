@@ -53,7 +53,7 @@ app.get("/check", (req, res) => {
 		{
 			// if Plural will return the singular version so still a valid word
 			if (word[4].toUpperCase()=="S" && response.data.word.toUpperCase()==word.toUpperCase().substring(0,4)) {
-				res.json(true);
+				res.json(response.data);
 				return;
 			}
 			res.json(false);

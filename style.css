@@ -77,6 +77,7 @@ font-size: small;
 .gray-overlay {
  background-color: #3a3a3c !important;
  border: none !important;
+ color: grey;
 }
 .yellow-overlay {
  background-color: #b59f3a !important;
@@ -102,15 +103,16 @@ font-size: small;
   transform: rotateX(0deg);
  }
 }
-div.definition-container {
+.definition-container {
 position: fixed;
 right: 20px;
 bottom: 20px;
 width: 90%;
 height: 90%;
 width: 500px;
-color:#538d4e;
-/* border:3px solid #3a3a3c; */
 margin: 1px;
 padding: 1px;
+}
+li {
+	color:#538d4e;
 }

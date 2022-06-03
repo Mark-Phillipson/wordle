@@ -116,18 +116,22 @@ const checkRow = () => {
 					console.log('guess is ' + guess, 'wordle is ' + wordle);
 					flipTile();
 					console.log(json);
-					var firstDefinition = 'Definition: ' + json.results[0].definition;
-					showDefinition(firstDefinition);
+					var temporary = '';
+					json.results.forEach(item => {
+						temporary = temporary + '<li>' + item.definition + '</li>';
+					});
+					var definitionList = '<ul>' + temporary + '</ul>';
+					showDefinition(definitionList);
 					if (wordle == guess) {
 						showMessage('Magnificent!');
-						showDefinition(firstDefinition);
+						showDefinition(definitionList);
 						isGameOver = true;
 						return;
 					} else {
 						if (currentRow >= 5) {
 							isGameOver = true;
 							showMessage('Game over Word was: ' + wordle);
-							showDefinition(firstDefinition);
+							showDefinition(definitionList);
 							return;
 						}
 					}
@@ -140,19 +144,19 @@ const checkRow = () => {
 	}
 };
 const showMessage = (message) => {
-	definitionDisplay.textContent = '';
 	const messageElement = document.createElement('p');
 	messageElement.textContent = message;
 	messageDisplay.append(messageElement);
 	setTimeout(() => {
 		messageDisplay.removeChild(messageElement);
-	}, 2000);;
+	}, 7000);
 }
-const showDefinition = (definition) => {
-	definitionDisplay.textContent = definition;
-	setTimeout(() => {
-		definitionDisplay.textContent = '';
-	}, 10000);;
+const showDefinition = (definitions) => {
+	definitionDisplay.innerHTML = definitions;
+	//definitionDisplay.textContent = definition;
+	// setTimeout(() => {
+	// 	definitionDisplay.textContent = '';
+	// }, 10000);
 }
 
 const addColorToKey = (keyLetter, color) => {
