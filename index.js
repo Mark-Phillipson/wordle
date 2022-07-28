@@ -59,6 +59,7 @@ app.get("/check", (req, res) => {
 			res.json(false);
 		}
 	}).catch((error) => {
+		console.error(error);
 		res.json(false);
 	});
 });
